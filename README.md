@@ -31,7 +31,8 @@ El objetivo es mostrar cómo estructurar un repositorio desacoplado y flexible, 
 
 ## Ejemplo de uso
 
-<img width="1028" height="270" alt="Ejemplo de uso del repositorio" src="https://github.com/user-attachments/assets/41632790-cf78-4faf-a427-06f9f631e621" />
+<img width="1028" height="270" alt="p1" src="https://github.com/user-attachments/assets/e71f8552-3245-41a4-8bb8-8e865a33b659" />
+
 
 ---
 
