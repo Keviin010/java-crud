@@ -3,13 +3,14 @@ package org.poointerface.modelo;
 import java.util.Objects;
 
 public class Cliente {
+
     private Integer id;
     private String nombre;
     private String apellido;
     private static int UltimoId;
 
     public Cliente() {
-        this.id = ++ UltimoId;
+        this.id = ++UltimoId;
     }
 
     public Cliente(String nombre, String apellido) {
@@ -44,20 +45,24 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'';
+        return "id=" + id
+                + ", nombre='" + nombre + '\''
+                + ", apellido='" + apellido + '\'';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Cliente cliente = (Cliente) o;
         return Objects.equals(id, cliente.id);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        // Corregido: El hashCode debe ser consistente con equals() para funcionar correctamente
+        // en estructuras de datos como HashSet o HashMap. Retornar 0 anulaba el beneficio de estas tablas
+        return Objects.hash(id);
     }
 }
