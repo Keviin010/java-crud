@@ -23,14 +23,11 @@ public class ClienteLisRepositorio implements CrudRepositorio,
 
     @Override
     public Cliente porId(Integer id) {
-        Cliente c = null;
-        for (Cliente cli : dataSource) {
-            if (cli.getId() != null && cli.getId().equals(id)) {
-                c = cli;
-                break;
-            }
-        }
-        return c;
+        // Uso de Stream API para una busqueda mas funcional y clara
+        return dataSource.stream()
+                .filter(cli -> cli.getId() != null && cli.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -57,29 +54,19 @@ public class ClienteLisRepositorio implements CrudRepositorio,
 
     @Override
     public List<Cliente> listar(String campo, Direccion direccion) {
-
-        dataSource.sort(new Comparator<Cliente>() {
-            @Override
-            public int compare(Cliente a, Cliente b) {
-                int resultado = 0;
-                
-                String c = (campo == null) ? "" : campo.toLowerCase();
-                switch (c) {
-                    case "id":
-                        resultado = a.getId().compareTo(b.getId());
-                        break;
-                    case "nombre":
-                        resultado = a.getNombre().compareTo(b.getNombre());
-                        break;
-                    case "apellido":
-                        resultado = a.getApellido().compareTo(b.getApellido());
-                        break;
-                    default:
-                        resultado = 0;
-                }
-                // Si la dirección es DESC, invertimos el resultado
-                return direccion == Direccion.ASC ? resultado : -resultado;
+        // Se reemplaza la clase anonima por una expresinn lammbda para mejorar la legibilidad
+        dataSource.sort((a, b) -> {
+            int resultado = 0;
+            String c = (campo == null) ? "" : campo.toLowerCase();
+            switch (c) {
+                case "id" ->
+                    resultado = a.getId().compareTo(b.getId());
+                case "nombre" ->
+                    resultado = a.getNombre().compareTo(b.getNombre());
+                case "apellido" ->
+                    resultado = a.getApellido().compareTo(b.getApellido());
             }
+            return direccion == Direccion.ASC ? resultado : -resultado;
         });
         return dataSource;
     }
@@ -87,15 +74,10 @@ public class ClienteLisRepositorio implements CrudRepositorio,
     @Override
     public List<Cliente> listar(int desde, int hasta) {
         // Validar límites y devolver copia de sublista
-        if (desde < 0) {
-            desde = 0;
-        }
-        if (hasta > dataSource.size()) {
-            hasta = dataSource.size();
-        }
-        if (desde > hasta) {
-            return Collections.emptyList();
-        }
+        if (desde < 0) desde = 0;
+        if (hasta > dataSource.size()) hasta = dataSource.size();
+        if (desde > hasta) return Collections.emptyList();
+
         return new ArrayList<>(dataSource.subList(desde, hasta));
     }
 

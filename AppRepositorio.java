@@ -7,8 +7,10 @@ import java.util.List;
 
 public class AppRepositorio {
     public static void main(String[] args) {
-
-        CrudRepositorio repo = new ClienteLisRepositorio();
+        //Como ahora las interfaces son genericas, hay que avisarle
+        //a java con que tipo estamos trabajando
+        // Y los casteos ahora llevan el tipo:
+        List<Cliente> paginable = ((PaginableRepositorio<Cliente>)repo).listar(1, 3);
         repo.crear(new Cliente("Luis","Ramos"));
         repo.crear(new Cliente("Carlos","Gomez"));
         repo.crear(new Cliente("Mateo","Petro"));
