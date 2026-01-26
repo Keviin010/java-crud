@@ -51,7 +51,7 @@ Proyecto con fines educativos y demostrativos, enfocado en reforzar conceptos in
 ## Autor
 **Kevin Royo**  
 Estudiante de Ingeniería de Software  
-Desarrollo Backend
+
 
 ---
 
